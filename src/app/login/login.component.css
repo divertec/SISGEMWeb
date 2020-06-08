@@ -1,0 +1,14 @@
+.login-register.login-sidebar.bodyLogin {
+  padding-top: 5%;
+  background: linear-gradient(135deg, #097ade 0%, rgba(9, 122, 222, 0) 70%), linear-gradient(25deg, #0b16d5 10%, rgba(11, 22, 213, 0) 80%), linear-gradient(315deg, #0ad6e7 15%, rgba(10, 214, 231, 0) 80%), linear-gradient(245deg, #06c2ce 100%, rgba(6, 194, 206, 0) 70%);
+}
+
+.app-layout {
+  margin: 0px;
+  padding: 0px;
+}
+
+.menu-sidebar {
+  margin: 0px;
+  padding: 0px;
+}
