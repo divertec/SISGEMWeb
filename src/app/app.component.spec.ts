@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'sisgem-web'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('sisgem-web');
+    expect(app).toEqual('sisgem-web');
   });
 
   it('should render title', () => {
