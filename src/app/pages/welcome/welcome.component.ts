@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/Domain/User';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
-
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
@@ -10,13 +9,11 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
 })
 export class WelcomeComponent {
   isCollapsed = false;
-
   currentUser: User;
-
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }

@@ -7,6 +7,7 @@
 
 .app-layout {
   height: 100vh;
+  background-color: #1890ff;
 }
 
 .menu-sidebar {
@@ -34,7 +35,7 @@
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  background: #001529;
+  /*background: #001529;*/
   transition: all .3s;
 }
 
@@ -59,6 +60,10 @@ nz-header {
   padding: 0;
   width: 100%;
   z-index: 2;
+}
+
+nz-sider {
+  background: linear-gradient(-135deg, #35bc9c, #199d46)
 }
 
 .app-header {
