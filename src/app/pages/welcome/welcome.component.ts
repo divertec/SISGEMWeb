@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/Domain/User';
+import { Empleado } from 'src/app/Domain/Empleado';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 @Component({
@@ -9,13 +9,13 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
 })
 export class WelcomeComponent {
   isCollapsed = false;
-  currentUser: User;
+  currentEmpleado: Empleado;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
   ) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.authenticationService.currentEmpleado.subscribe(x => this.currentEmpleado = x);
   }
 
   logout() {

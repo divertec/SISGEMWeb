@@ -14,29 +14,33 @@ import es from '@angular/common/locales/es';
 import { JwtInterceptor } from './Helpers/jwt.interceptor';
 import { ErrorInterceptor } from './Helpers/error.interceptor';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { NzLayoutModule, NzMenuModule, NgZorroAntdModule } from 'ng-zorro-antd';
+import { DemoNgZorroAntdModule } from './ng-zorro-antd.module'
+import { EmpleadoComponent } from './pages/empleado/empleado.component';
+import { TitleHeaderComponent } from './components/title-header/title-header.component';
+
 registerLocaleData(es);
 
 @NgModule({
   declarations: [
     AppComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    EmpleadoComponent,
+    TitleHeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     IconsProviderModule,
     FormsModule,
+    DemoNgZorroAntdModule,
     HttpClientModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NgZorroAntdModule,
-    BrowserAnimationsModule, ReactiveFormsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: es_ES },
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, EmpleadoComponent]
 })
 export class AppModule { }

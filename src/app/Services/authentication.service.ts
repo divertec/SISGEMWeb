@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../Domain/User';
+import { Empleado } from '../Domain/Empleado';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -9,33 +9,33 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentEmpleadoSubject: BehaviorSubject<Empleado>;
+  public currentEmpleado: Observable<Empleado>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('sessionUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentEmpleadoSubject = new BehaviorSubject<Empleado>(JSON.parse(localStorage.getItem('sessionEmpleado')));
+    this.currentEmpleado = this.currentEmpleadoSubject.asObservable();
 
   }
 
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+  public get currentEmpleadoValue(): Empleado {
+    return this.currentEmpleadoSubject.value;
   }
 
   login(dniEmpleado: string, contrasenia: string) {
     return this.http.post<any>(`${environment.apiUrl}/empleado/login`, { dniEmpleado, contrasenia })
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('sessionUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
+        localStorage.setItem('sessionEmpleado', JSON.stringify(user));
+        this.currentEmpleadoSubject.next(user);
         return user;
       }));
   }
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('sessionUser');
-    this.currentUserSubject.next(null);
+    localStorage.removeItem('sessionEmpleado');
+    this.currentEmpleadoSubject.next(null);
   }
 
 }

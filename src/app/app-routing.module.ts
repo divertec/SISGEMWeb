@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './Helpers/auth.guard';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { EmpleadoComponent } from './pages/empleado/empleado.component';
 
 /* const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/welcome' },
@@ -12,7 +13,16 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
-  { path: 'dashboard', component: WelcomeComponent, canActivate: [AuthGuard] },
+  {
+    path: 'dashboard', component: WelcomeComponent, canActivate: [AuthGuard],
+
+    children: [
+      {
+        path: 'empleado', component: EmpleadoComponent
+      },
+    ]
+
+  },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
