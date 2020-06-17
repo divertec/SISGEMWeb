@@ -19,8 +19,6 @@ export class EmpleadoComponent implements OnInit {
   dni = '';
 
 
-
-
   constructor(private empleadoService: EmpleadoService) {
   }
   ngOnInit() {
@@ -35,6 +33,7 @@ export class EmpleadoComponent implements OnInit {
   deleteEmpleado(dni: string) {
 
   }
+
   editEmpleado(dni: string) {
 
   }

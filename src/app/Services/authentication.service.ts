@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { TipoUsuario } from '../Domain/TipoUsuario';
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,4 @@ export class AuthenticationService {
     localStorage.removeItem('sessionEmpleado');
     this.currentEmpleadoSubject.next(null);
   }
-
 }

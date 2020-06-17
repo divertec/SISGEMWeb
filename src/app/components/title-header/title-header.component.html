@@ -10,7 +10,7 @@
         <nz-descriptions-item nzTitle="Tipo" [nzSpan]="1"><a>{{userLoggedIn.data.tipoUsuario.tipo}}</a>
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="Censo" [nzSpan]="1">
-          {{userLoggedIn.data.censoZona != ''? userLoggedIn.data.censoZona:"Sin Asignar"}}</nz-descriptions-item>
+          {{userLoggedIn.data.censoZona != null? userLoggedIn.data.censoZona:"Sin Asignar"}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="F.I. Censo" [nzSpan]="1">{{userLoggedIn.data.fechaCreacion}}
         </nz-descriptions-item>
         <nz-descriptions-item nzTitle="F.F. Censo" [nzSpan]="1">{{userLoggedIn.data.fechaCreacion}}

@@ -10,16 +10,19 @@ import { EmpleadoComponent } from '../empleado/empleado.component';
 import { DemoNgZorroAntdModule } from '../../ng-zorro-antd.module'
 const icons: IconDefinition[] = [AccountBookFill, AlertOutline, AlertFill];
 
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [WelcomeRoutingModule,
     DemoNgZorroAntdModule,
     NzIconModule.forRoot(icons),
     IconModule,
+    CommonModule
   ],
-  declarations: [WelcomeComponent,],
+  declarations: [WelcomeComponent],
   bootstrap: [EmpleadoComponent],
   exports: [WelcomeComponent],
+
 
 })
 export class WelcomeModule { }

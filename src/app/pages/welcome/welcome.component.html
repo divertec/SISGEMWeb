@@ -30,15 +30,18 @@
     <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
         <ul>
-          <li nz-submenu nzTitle="Maestro">
+          <li nz-submenu nzTitle="Maestro"
+            *ngIf="currentEmpleado.data.tipoUsuario.tipId==5 || currentEmpleado.data.tipoUsuario.tipId==3 || currentEmpleado.data.tipoUsuario.tipId==2">
             <ul>
               <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/empleado">Empleados</a></li>
               <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/censo">Censo</a></li>
               <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/zona">Zona</a></li>
             </ul>
           </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
+          <li nz-submenu nzTitle="Proceso" *ngIf="currentEmpleado.data.tipoUsuario.tipId==4">
+            <ul>
+              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/censo">Registro Censo</a></li>
+            </ul>
           </li>
           <li nz-menu-item nzMatchRouter>
             <a>Workplace</a>
