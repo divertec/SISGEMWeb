@@ -17,6 +17,9 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { DemoNgZorroAntdModule } from './ng-zorro-antd.module'
 import { EmpleadoComponent } from './pages/empleado/empleado.component';
 import { TitleHeaderComponent } from './components/title-header/title-header.component';
+import { CensoComponent } from './pages/censo/censo.component';
+import { ZonaComponent } from './pages/zona/zona.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 registerLocaleData(es);
 
@@ -25,7 +28,10 @@ registerLocaleData(es);
     AppComponent,
     WelcomeComponent,
     EmpleadoComponent,
-    TitleHeaderComponent
+    TitleHeaderComponent,
+    CensoComponent,
+    ZonaComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

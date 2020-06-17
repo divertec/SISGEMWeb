@@ -10,6 +10,7 @@
       </th>
       <th>Tipo Usuario</th>
       <th>Estado</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -17,6 +18,11 @@
       <td>{{data.nombres}}</td>
       <td>{{data.tipoUsuario.tipo}}</td>
       <td>{{data.estado == 1?"Activo":"Inactivo"}}</td>
+      <td>
+        <button nz-button nzType="default" (click)="editEmpleado(data.dniEmpleado)">Editar</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="primary" nzDanger (click)="deleteEmpleado(data.dniEmpleado)">Eliminar</button>
+      </td>
     </tr>
   </tbody>
 </nz-table>
@@ -31,3 +37,10 @@
     </div>
   </div>
 </nz-dropdown-menu>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <input type="text" nz-input placeholder="Search name" [disabled]="true" [(ngModel)]="searchValue" />
+  <p>Content two</p>
+  <p>Content three</p>
+  <p>Content three</p>
+</nz-modal>

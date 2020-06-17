@@ -4,6 +4,9 @@ import { AuthGuard } from './Helpers/auth.guard';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { EmpleadoComponent } from './pages/empleado/empleado.component';
+import { ZonaComponent } from './pages/zona/zona.component';
+import { CensoComponent } from './pages/censo/censo.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 /* const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/welcome' },
@@ -20,6 +23,14 @@ const routes: Routes = [
       {
         path: 'empleado', component: EmpleadoComponent
       },
+      {
+        path: 'zona', component: ZonaComponent
+      },
+      {
+        path: 'censo', component: CensoComponent
+      }, {
+        path: 'perfil', component: PerfilComponent
+      }
     ]
 
   },

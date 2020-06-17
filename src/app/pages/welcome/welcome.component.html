@@ -16,7 +16,7 @@
     </div>
     <div nz-row style="padding:1rem 0.5rem 1rem 0.5rem;">
       <div nz-col nzXs="12" nzXl="12" style="text-align: center;">
-        <button nz-button nzType="primary" nzShape="circle">
+        <button nz-button nzType="primary" nzShape="circle" routerLink="/dashboard/perfil">
           <i nz-icon nzType="user" nzTheme="outline" style="font-size: 1rem;"></i>
         </button>
       </div>
@@ -30,11 +30,12 @@
     <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
         <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/dashboard/empleado">Empleado</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a class="nav-item nav-link">Logout</a>
+          <li nz-submenu nzTitle="Maestro">
+            <ul>
+              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/empleado">Empleados</a></li>
+              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/censo">Censo</a></li>
+              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/zona">Zona</a></li>
+            </ul>
           </li>
           <li nz-menu-item nzMatchRouter>
             <a>Monitor</a>
