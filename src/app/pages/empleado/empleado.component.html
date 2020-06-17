@@ -43,51 +43,51 @@
   </div>
 </nz-dropdown-menu>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="NUEVO EMPLEADO" nzWidth="600px" (nzOnCancel)="handleCancel()"
-  [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isVisible" nzTitle="NUEVO EMPLEADO" nzWidth="600px" nzAutofocus="'ok'"
+  (nzOnCancel)="handleCancel()" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+  (nzOnOk)="handleOk()">
   <ng-template #modalTitle>
     REGISTRO DE EMPLEADO
   </ng-template>
   <ng-template #modalContent>
-    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()" [nzLayout]="'horizontal'">
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dni">DNI EMPLEADO</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dni" nzRequired>DNI EMPLEADO</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input id="dni" formControlName="dniEmpleado" [disabled]="true" />
+          <input nz-input id="dni" formControlName="dniEmpleado">
         </nz-form-control>
       </nz-form-item>
-
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nombres">Nombres</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nombres" nzRequired>Nombres</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input nz-input id="nombres" formControlName="nombres" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired>Phone Number</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="celular">Celular</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input formControlName="phoneNumber" id="'phoneNumber'" nz-input />
+          <input type="number" formControlName="celular" id="celular" nz-input />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="correo">Correo</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="correo">Correo</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ingrese su Correo">
           <input nz-input formControlName="correo" id="correo" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired>Sexo</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sexo">Sexo</nz-form-label>
         <nz-select formControlName="sexo" class="phone-select">
-          <nz-option nzLabel="M" nzValue="Masculino"></nz-option>
-          <nz-option nzLabel="F" nzValue="Femenino"></nz-option>
+          <nz-option nzLabel="MASCULINO" nzValue="M"></nz-option>
+          <nz-option nzLabel="FEMENINO" nzValue="F"></nz-option>
         </nz-select>
       </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tipoUsuario" nzRequired>Tipo Usuario</nz-form-label>
-        <nz-select formControlName="tipoUsuario" class="phone-select">
-          <nz-option *ngFor="let tipo of listOfTipo" nzCustomContent="true" nzLabel={{tipo.tipo}}
-            nzValue={{tipo.tipId}}></nz-option>
-          <!---<nz-option nzLabel="F" nzValue="Femenino"></nz-option>-->
+      <nz-form-item formGroupName="tipoUsuario">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tipId" nzRequired>Tipo Usuario</nz-form-label>
+        <nz-select formControlName="tipId" style="width: 12rem;">
+          <nz-option *ngFor="let tipo of listOfTipo" [nzLabel]="tipo.tipo" [nzValue]="tipo.tipId"></nz-option>
+          <!--<nz-option nzLabel="Femenino" nzValue="F"></nz-option>
+          <nz-option nzLabel="Masculino" nzValue="M"></nz-option>-->
         </nz-select>
       </nz-form-item>
       <nz-form-item>
@@ -99,11 +99,10 @@
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="base64Img">Foto</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input type="file" id="base64Img" formControlName="base64Img" />
+          <input nz-input type="file" id="base64Img" (change)="changeListener($event)" />
         </nz-form-control>
       </nz-form-item>
-
-      <nz-form-item nz-row class="register-area">
+      <nz-form-item nz-row class=" register-area">
         <nz-form-control [nzSpan]="14" [nzOffset]="6">
           <button nz-button nzType="primary">Register</button>
         </nz-form-control>

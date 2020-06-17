@@ -10,8 +10,17 @@ export class ZonaService {
   constructor(private http: HttpClient) {
   }
 
-  getAllEmpleados() {
+  getAllZona() {
     return this.http.get(`${environment.apiUrl}/zona/`);
+  }
+  insertZona(zona: string) {
+    return this.http.post(`${environment.apiUrl}/zona/`, zona);
+  }
+  updateZona(zona: string, idZona: number) {
+    return this.http.put(`${environment.apiUrl}/zona/${idZona}`, zona);
+  }
+  deleteCenso(dni: string) {
+    return this.http.delete(`${environment.apiUrl}/censo/${dni}`);
   }
 
 }

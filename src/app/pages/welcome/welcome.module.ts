@@ -12,13 +12,15 @@ const icons: IconDefinition[] = [AccountBookFill, AlertOutline, AlertFill];
 
 import { CommonModule } from '@angular/common';
 import { TitleHeaderComponent } from 'src/app/components/title-header/title-header.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [WelcomeRoutingModule,
     DemoNgZorroAntdModule,
     NzIconModule.forRoot(icons),
     IconModule,
-    CommonModule
+    CommonModule, FormsModule,
+
   ],
   declarations: [WelcomeComponent, TitleHeaderComponent],
   bootstrap: [EmpleadoComponent],

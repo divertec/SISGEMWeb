@@ -12,4 +12,16 @@ export class CensoService {
   getAllCenso() {
     return this.http.get(`${environment.apiUrl}/censo/`);
   }
+
+  insertCenso(censo: string) {
+    return this.http.post(`${environment.apiUrl}/censo/`, censo);
+  }
+
+  updateCenso(censo: string, idcenso: number) {
+    return this.http.put(`${environment.apiUrl}/censo/${idcenso}`, censo);
+  }
+  deleteCenso(dni: string) {
+    return this.http.delete(`${environment.apiUrl}/censo/${dni}`);
+  }
+
 }

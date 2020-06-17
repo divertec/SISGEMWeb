@@ -1,4 +1,9 @@
 <app-title-header [title]="'LISTA DE ZONAS'"></app-title-header>
+
+<div style="padding: 2rem 0 2rem 0;">
+  <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Nueva Zona</span></button>
+</div>
+
 <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" [nzLoading]="loading">
   <thead>
     <tr>
@@ -39,3 +44,40 @@
     </div>
   </div>
 </nz-dropdown-menu>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="NUEVO EMPLEADO" nzWidth="600px" nzAutofocus="'ok'"
+  (nzOnCancel)="handleCancel()" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+  (nzOnOk)="handleOk()">
+  <ng-template #modalTitle>
+    REGISTRO DE ZONA
+  </ng-template>
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()" [nzLayout]="'horizontal'">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="zonas" nzRequired>Nombre</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="zonas" formControlName="zonas">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="descripcion" nzRequired>Descripción</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="descripcion" formControlName="descripcion" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cantidadEmpleados">Cantidad Empleados</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input type="number" formControlName="cantidadEmpleados" id="cantidadEmpleados" nz-input />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row class=" register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">Registrar</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>

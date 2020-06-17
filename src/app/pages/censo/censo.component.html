@@ -1,4 +1,9 @@
 <app-title-header [title]="'LISTA DE CENSOS'"></app-title-header>
+
+<div style="padding: 2rem 0 2rem 0;">
+  <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Nuevo Censo</span></button>
+</div>
+
 <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" [nzLoading]="loading">
   <thead>
     <tr>
@@ -41,3 +46,41 @@
     </div>
   </div>
 </nz-dropdown-menu>
+
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="NUEVO CENSO" nzWidth="600px" nzAutofocus="'ok'"
+  (nzOnCancel)="handleCancel()" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+  (nzOnOk)="handleOk()">
+  <ng-template #modalTitle>
+    REGISTRO DE CENSO
+  </ng-template>
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()" [nzLayout]="'horizontal'">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dni" nzRequired>Nombre</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="dni" formControlName="nomCenso">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>F. Inicio</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-date-picker [nzFormat]="dateFormat" formControlName="fechaIni"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>F. Fin</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-date-picker [nzFormat]="dateFormat" formControlName="fechaFin"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row class=" register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">Register</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>

@@ -23,5 +23,13 @@ export class EmpleadoService {
     return this.http.post(`${environment.apiUrl}/empleado/`, empleado);
   }
 
+  updateEmpleado(empleado: string, dni: string) {
+    return this.http.put(`${environment.apiUrl}/empleado/${dni}`, empleado);
+
+  }
+  deleteEmpleado(dni: string) {
+    return this.http.delete(`${environment.apiUrl}/empleado/${dni}`);
+  }
+
 
 } 

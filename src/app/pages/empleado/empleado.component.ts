@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { EmpleadoService } from "../../Services/empleado.service";
 import { Empleados } from 'src/app/Domain/Empleados';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TipoUsuario } from 'src/app/Domain/TipoUsuario';
 
 @Component({
   selector: 'app-empleado',
@@ -21,31 +22,57 @@ export class EmpleadoComponent implements OnInit {
   submitted = false;
   registerForm: FormGroup;
 
+  //SIRVE PARA LIMPIAR LA ETIQUETA
+  @ViewChild('fileInput') fileInput: ElementRef;
+
 
   constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
     this.fetchAllEmpleados();
-
-    console.log(JSON.stringify(this.fetchAllTipo()));
+    this.fetchAllTipo();
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      dniEmpleado: null,
+      contrasenia: 'password',
+      nombres: '',
+      celular: '',
+      correo: '',
+      sexo: '',
+      tipoUsuario: this.formBuilder.group({
+        tipId: ''
+      }),
+      direccionDomicilio: '',
+      base64Img: null
+
     });
   }
+
+  //CUANDO SE INGRESA UNA IMAGEN
+  changeListener($event): void {
+    this.readThis($event.target);
+  }
+
+  readThis(inputValue: any): void {
+    var file: File = inputValue.files[0];
+    var myReader: FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.registerForm.get('base64Img').setValue(myReader.result);
+    }
+    myReader.readAsDataURL(file);
+  }
+  //------------------------------------------
 
   get f() { return this.registerForm.controls; }
 
   //SERVICES --------   
   deleteEmpleado(dni: string) {
-
+    this.fetchDelteEmpleado(dni);
+    console.log(dni);
   }
 
   editEmpleado(dni: string) {
-
+    console.log(dni);
   }
 
   fetchAllEmpleados() {
@@ -54,12 +81,13 @@ export class EmpleadoComponent implements OnInit {
   fetchAllTipo() {
     this.empleadoService.getAllTipo().subscribe((resp: any) => this.listOfTipo = resp.data, err => console.log(err))
   }
+  fetchDelteEmpleado(dni: string) {
+    this.empleadoService.deleteEmpleado(dni).subscribe((resp: any) => { console.log(resp), this.fetchAllEmpleados(), err => console.log(err) });
+  }
   //MÉTODOS
   onSubmit() {
-
-  }
-  newEmpleado() {
-    this.isVisible = true;
+    const user = this.registerForm.value;
+    this.empleadoService.insertEmpleado(user).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllEmpleados(), err => console.log(err)) });
   }
 
   //DATATABLES
