@@ -1,4 +1,9 @@
 <app-title-header [title]="'LISTA DE EMPLEADOS'"></app-title-header>
+
+<div style="padding: 2rem 0 2rem 0;">
+  <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Nuevo Empleado</span></button>
+</div>
+
 <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" [nzLoading]="loading">
   <thead>
     <tr>
@@ -38,9 +43,73 @@
   </div>
 </nz-dropdown-menu>
 
-<nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-  <input type="text" nz-input placeholder="Search name" [disabled]="true" [(ngModel)]="searchValue" />
-  <p>Content two</p>
-  <p>Content three</p>
-  <p>Content three</p>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="NUEVO EMPLEADO" nzWidth="600px" (nzOnCancel)="handleCancel()"
+  [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnOk)="handleOk()">
+  <ng-template #modalTitle>
+    REGISTRO DE EMPLEADO
+  </ng-template>
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dni">DNI EMPLEADO</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="dni" formControlName="dniEmpleado" [disabled]="true" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nombres">Nombres</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="nombres" formControlName="nombres" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired>Phone Number</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input formControlName="phoneNumber" id="'phoneNumber'" nz-input />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="correo">Correo</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ingrese su Correo">
+          <input nz-input formControlName="correo" id="correo" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber" nzRequired>Sexo</nz-form-label>
+        <nz-select formControlName="sexo" class="phone-select">
+          <nz-option nzLabel="M" nzValue="Masculino"></nz-option>
+          <nz-option nzLabel="F" nzValue="Femenino"></nz-option>
+        </nz-select>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tipoUsuario" nzRequired>Tipo Usuario</nz-form-label>
+        <nz-select formControlName="tipoUsuario" class="phone-select">
+          <nz-option *ngFor="let tipo of listOfTipo" nzCustomContent="true" nzLabel={{tipo.tipo}}
+            nzValue={{tipo.tipId}}></nz-option>
+          <!---<nz-option nzLabel="F" nzValue="Femenino"></nz-option>-->
+        </nz-select>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="direccionDomicilio">Direccion</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ingrese su Direccion">
+          <input nz-input formControlName="direccionDomicilio" id="direccionDomicilio" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="base64Img">Foto</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input type="file" id="base64Img" formControlName="base64Img" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-row class="register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">Register</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+  <ng-template #modalFooter>
+  </ng-template>
 </nz-modal>

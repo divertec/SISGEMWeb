@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpleadoService } from "../../Services/empleado.service";
 import { Empleados } from 'src/app/Domain/Empleados';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-empleado',
@@ -14,22 +15,31 @@ export class EmpleadoComponent implements OnInit {
   loading = true;
   listOfData = [];
   listOfDisplayData = [];
+  listOfTipo = [];
   ///MODAL
   isVisible = false;
-  dni = '';
+  submitted = false;
+  registerForm: FormGroup;
 
 
-  constructor(private empleadoService: EmpleadoService) {
+  constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder) {
   }
+
   ngOnInit() {
     this.fetchAllEmpleados();
+
+    console.log(JSON.stringify(this.fetchAllTipo()));
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
-  ver() {
-    console.log(JSON.stringify(this.listOfDisplayData));
-  }
+  get f() { return this.registerForm.controls; }
 
-
+  //SERVICES --------   
   deleteEmpleado(dni: string) {
 
   }
@@ -38,12 +48,18 @@ export class EmpleadoComponent implements OnInit {
 
   }
 
-  newEmpleado() {
-    this.isVisible = true;
-  }
-
   fetchAllEmpleados() {
     this.empleadoService.getAllEmpleados().subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => (console.log(error)));
+  }
+  fetchAllTipo() {
+    this.empleadoService.getAllTipo().subscribe((resp: any) => this.listOfTipo = resp.data, err => console.log(err))
+  }
+  //MÉTODOS
+  onSubmit() {
+
+  }
+  newEmpleado() {
+    this.isVisible = true;
   }
 
   //DATATABLES
@@ -58,9 +74,11 @@ export class EmpleadoComponent implements OnInit {
   }
 
   //MODAL
-  /*showModal(): void {
+  showModal(): void {
     this.isVisible = true;
-  }*/
+
+
+  }
 
   handleOk(): void {
     console.log('Button ok clicked!');

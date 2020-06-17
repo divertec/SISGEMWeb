@@ -1,1 +1,43 @@
 <app-title-header [title]="'LISTA DE CENSOS'"></app-title-header>
+<nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" [nzLoading]="loading">
+  <thead>
+    <tr>
+      <th nzCustomFilter>
+        Nombre
+        <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>
+      </th>
+      <th>F. Inicio</th>
+      <th>F. Fin</th>
+      <th>Author</th>
+      <th>Estado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of nzTable.data">
+      <td>{{data.nomCenso}}</td>
+      <td>{{data.fechaIni}}</td>
+      <td>{{data.fechaFin}}</td>
+      <td>{{data.creoCenso.nombres}}</td>
+      <td>{{data.estado == 1?"Activo":"Inactivo"}}</td>
+      <td>
+        <button nz-button nzType="default" (click)="editZona(data.idZona)">Editar</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-button nzType="primary" nzDanger (click)="deleteZona(data.idZona)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+        Search
+      </button>
+      <button nz-button nzSize="small" (click)="reset()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>

@@ -11,6 +11,7 @@ import { DemoNgZorroAntdModule } from '../../ng-zorro-antd.module'
 const icons: IconDefinition[] = [AccountBookFill, AlertOutline, AlertFill];
 
 import { CommonModule } from '@angular/common';
+import { TitleHeaderComponent } from 'src/app/components/title-header/title-header.component';
 
 @NgModule({
   imports: [WelcomeRoutingModule,
@@ -19,7 +20,7 @@ import { CommonModule } from '@angular/common';
     IconModule,
     CommonModule
   ],
-  declarations: [WelcomeComponent],
+  declarations: [WelcomeComponent, TitleHeaderComponent],
   bootstrap: [EmpleadoComponent],
   exports: [WelcomeComponent],
 
