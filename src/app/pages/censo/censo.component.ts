@@ -39,9 +39,19 @@ export class CensoComponent implements OnInit {
     })
   }
 
-  editZona(idCenso: number) { }
-  deleteZona(idCenso: number) { }
+  editCenso(idCenso: number) {
 
+
+  }
+
+  deleteCenso(idCenso: number) {
+    this.fetchDeleteCenso(idCenso);
+  }
+
+
+  fetchDeleteCenso(idZona: number) {
+    this.censo.deleteCenso(idZona).subscribe((resp: any) => { this.fetchAllCenso(), console.log(resp), error => (console.log(error)) });
+  }
   //FETCHS....
   fetchAllCenso() {
     this.censo.getAllCenso().subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => (console.log(error)));
@@ -54,7 +64,7 @@ export class CensoComponent implements OnInit {
     censo.fechaFin = this.datePipe.transform(censo.fechaFin, 'dd-MM-yyyy');
     censo.fechaIni = this.datePipe.transform(censo.fechaIni, 'dd-MM-yyyy');
     console.log(JSON.stringify(censo));
-    this.censo.insertCenso(censo).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllCenso(), err => console.log(err)) });
+    this.censo.insertCenso(censo).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllCenso(), err => console.log(err)), this.isVisible = false });
   }
 
   //DATATABLES

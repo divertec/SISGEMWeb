@@ -31,19 +31,25 @@ export class ZonaComponent implements OnInit {
     });
   }
 
-  editZona(idZona: number) { }
-  deleteZona(idZona: number) { }
+  editZona(idZona: number) {
+  }
+  deleteZona(idZona: number) {
+    this.fetchDeletezona(idZona)
+  }
 
   //FETCHS....
   fetchAllZonas() {
     this.zona.getAllZona().subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => (console.log(error)));
+  }
+  fetchDeletezona(idZona: number) {
+    this.zona.deleteZona(idZona).subscribe((resp: any) => { this.fetchAllZonas(), console.log(resp), error => (console.log(error)) });
   }
 
   //Método
   onSubmit() {
     const zona = this.registerForm.value;
     console.log(JSON.stringify(zona));
-    this.zona.insertZona(zona).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllZonas(), err => console.log(err)) });
+    this.zona.insertZona(zona).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllZonas(), err => console.log(err)), this.isVisible = false });
   }
 
 

@@ -3,6 +3,8 @@ import { EmpleadoService } from "../../Services/empleado.service";
 import { Empleados } from 'src/app/Domain/Empleados';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TipoUsuario } from 'src/app/Domain/TipoUsuario';
+import { CensoService } from 'src/app/Services/censo.service';
+import { ZonaService } from 'src/app/Services/zona.service';
 
 @Component({
   selector: 'app-empleado',
@@ -17,21 +19,30 @@ export class EmpleadoComponent implements OnInit {
   listOfData = [];
   listOfDisplayData = [];
   listOfTipo = [];
+  listOfCenso = []
+  listOfZona = []
   ///MODAL
   isVisible = false;
   submitted = false;
   registerForm: FormGroup;
+  // asignación Modal
+  registerAsignacion: FormGroup;
+  isVisibleAsignar = false;
+  submittedAsignar = false;
 
   //SIRVE PARA LIMPIAR LA ETIQUETA
   @ViewChild('fileInput') fileInput: ElementRef;
 
 
-  constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder) {
+  constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder, private censoService: CensoService, private zonaService: ZonaService) {
   }
 
   ngOnInit() {
     this.fetchAllEmpleados();
     this.fetchAllTipo();
+    this.fetchAllCenso();
+    this.fetchAllZona();
+
     this.registerForm = this.formBuilder.group({
       dniEmpleado: null,
       contrasenia: 'password',
@@ -44,6 +55,19 @@ export class EmpleadoComponent implements OnInit {
       }),
       direccionDomicilio: '',
       base64Img: null
+
+    });
+
+    this.registerAsignacion = this.formBuilder.group({
+      zona: this.formBuilder.group({
+        idZona: ''
+      }),
+      censo: this.formBuilder.group({
+        idCenso: ''
+      }),
+      empleado: this.formBuilder.group({
+        dniEmpleado: ''
+      }),
 
     });
   }
@@ -71,8 +95,11 @@ export class EmpleadoComponent implements OnInit {
     console.log(dni);
   }
 
-  editEmpleado(dni: string) {
+  asignarEmpleado(dni: string) {
+    this.registerAsignacion.get('empleado')!.setValue({ dniEmpleado: dni });
+    this.isVisibleAsignar = true;
     console.log(dni);
+
   }
 
   fetchAllEmpleados() {
@@ -84,12 +111,24 @@ export class EmpleadoComponent implements OnInit {
   fetchDelteEmpleado(dni: string) {
     this.empleadoService.deleteEmpleado(dni).subscribe((resp: any) => { console.log(resp), this.fetchAllEmpleados(), err => console.log(err) });
   }
-  //MÉTODOS
-  onSubmit() {
-    const user = this.registerForm.value;
-    this.empleadoService.insertEmpleado(user).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllEmpleados(), err => console.log(err)) });
+  fetchAllCenso() {
+    this.censoService.getAllCenso().subscribe((resp: any) => { this.listOfCenso = resp.data }, error => (console.log(error)));
   }
 
+  fetchAllZona() {
+    this.zonaService.getAllZona().subscribe((resp: any) => { this.listOfZona = resp.data }, error => (console.log(error)));
+  }
+  //MÉTODOS PARA CREAR
+  onSubmit() {
+    const user = this.registerForm.value;
+    this.empleadoService.insertEmpleado(user).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllEmpleados(), err => console.log(err)), this.isVisible = false });
+  }
+  onSubmitAsignar() {
+    const asignacion = this.registerAsignacion.value;
+    console.log(asignacion)
+    this.empleadoService.insertCensoZona(asignacion).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllEmpleados(), err => console.log(err)), this.isVisibleAsignar = false; })
+
+  }
   //DATATABLES
   reset(): void {
     this.searchValue = '';
@@ -100,13 +139,12 @@ export class EmpleadoComponent implements OnInit {
     this.visible = false;
     this.listOfDisplayData = this.listOfData.filter((item: Empleados) => item.nombres.indexOf(this.searchValue) !== -1);
   }
-
   //MODAL
   showModal(): void {
     this.isVisible = true;
-
-
   }
+
+
 
   handleOk(): void {
     console.log('Button ok clicked!');
@@ -118,5 +156,14 @@ export class EmpleadoComponent implements OnInit {
     this.isVisible = false;
   }
 
+  handleOkAsignar(): void {
+    console.log('Button ok clicked!');
+    this.isVisibleAsignar = false;
+  }
+
+  handleCancelAsignar(): void {
+    console.log('Button cancel clicked!');
+    this.isVisibleAsignar = false;
+  }
 
 }

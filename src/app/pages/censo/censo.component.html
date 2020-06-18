@@ -28,9 +28,9 @@
       <td>{{data.creoCenso.nombres}}</td>
       <td>{{data.estado == 1?"Activo":"Inactivo"}}</td>
       <td>
-        <button nz-button nzType="default" (click)="editZona(data.idZona)">Editar</button>
+        <button nz-button nzType="default" (click)="editCenso(data.idCenso)">Editar</button>
         <nz-divider nzType="vertical"></nz-divider>
-        <button nz-button nzType="primary" nzDanger (click)="deleteZona(data.idZona)">Eliminar</button>
+        <button nz-button nzType="primary" nzDanger (click)="deleteCenso(data.idCenso)">Eliminar</button>
       </td>
     </tr>
   </tbody>

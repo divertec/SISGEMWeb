@@ -24,7 +24,7 @@
       <td>{{data.tipoUsuario.tipo}}</td>
       <td>{{data.estado == 1?"Activo":"Inactivo"}}</td>
       <td>
-        <button nz-button nzType="default" (click)="editEmpleado(data.dniEmpleado)">Editar</button>
+        <button nz-button nzType="default" (click)="asignarEmpleado(data.dniEmpleado)">Asignar</button>
         <nz-divider nzType="vertical"></nz-divider>
         <button nz-button nzType="primary" nzDanger (click)="deleteEmpleado(data.dniEmpleado)">Eliminar</button>
       </td>
@@ -110,5 +110,38 @@
     </form>
   </ng-template>
   <ng-template #modalFooter>
+  </ng-template>
+</nz-modal>
+
+
+<!---   MODAL ASIGNAR   ------>
+<nz-modal [(nzVisible)]="isVisibleAsignar" nzTitle="ASIGNAR PERSONAL" nzWidth="600px" nzAutofocus="'ok'"
+  (nzOnCancel)="handleCancelAsignar()" [nzTitle]="modalTitleAsignacion" [nzContent]="modalContentAsignacion"
+  [nzFooter]="modalFooterAsignacion" (nzOnOk)="handleOkAsignar()">
+  <ng-template #modalTitleAsignacion>
+    ASIGNAR PERSONAL
+  </ng-template>
+  <ng-template #modalContentAsignacion>
+    <form nz-form [formGroup]="registerAsignacion" (ngSubmit)="onSubmitAsignar()" [nzLayout]="'horizontal'">
+      <nz-form-item formGroupName="zona">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="zona" nzRequired>Zonas</nz-form-label>
+        <nz-select formControlName="idZona" style="width: 12rem;">
+          <nz-option *ngFor="let zona of listOfZona" [nzLabel]="zona.zonas" [nzValue]="zona.idZona"></nz-option>
+        </nz-select>
+      </nz-form-item>
+      <nz-form-item formGroupName="censo">
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tipId" nzRequired>Censos</nz-form-label>
+        <nz-select formControlName="idCenso" style="width: 12rem;">
+          <nz-option *ngFor="let censo of listOfCenso" [nzLabel]="censo.nomCenso" [nzValue]="censo.idCenso"></nz-option>
+        </nz-select>
+      </nz-form-item>
+      <nz-form-item nz-row class=" register-area">
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">Register</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+  <ng-template #modalFooterAsignacion>
   </ng-template>
 </nz-modal>

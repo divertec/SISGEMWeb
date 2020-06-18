@@ -20,7 +20,7 @@ export class CensoService {
   updateCenso(censo: string, idcenso: number) {
     return this.http.put(`${environment.apiUrl}/censo/${idcenso}`, censo);
   }
-  deleteCenso(dni: string) {
+  deleteCenso(dni: number) {
     return this.http.delete(`${environment.apiUrl}/censo/${dni}`);
   }
 
