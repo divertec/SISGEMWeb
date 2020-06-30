@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TipoUsuario } from 'src/app/Domain/TipoUsuario';
 import { CensoService } from 'src/app/Services/censo.service';
 import { ZonaService } from 'src/app/Services/zona.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-empleado',
@@ -13,6 +14,8 @@ import { ZonaService } from 'src/app/Services/zona.service';
 })
 export class EmpleadoComponent implements OnInit {
   ///DATATABLE
+  loadingIMG = false;
+  imageSource;
   searchValue = '';
   visible = false;
   loading = true;
@@ -34,7 +37,7 @@ export class EmpleadoComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef;
 
 
-  constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder, private censoService: CensoService, private zonaService: ZonaService) {
+  constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder, private censoService: CensoService, private zonaService: ZonaService, private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
@@ -82,9 +85,13 @@ export class EmpleadoComponent implements OnInit {
     var myReader: FileReader = new FileReader();
     myReader.onloadend = (e) => {
       this.registerForm.get('base64Img').setValue(myReader.result);
+      this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl(`${myReader.result}`)
+      this.loadingIMG = true;
     }
     myReader.readAsDataURL(file);
+
   }
+
   //------------------------------------------
 
   get f() { return this.registerForm.controls; }

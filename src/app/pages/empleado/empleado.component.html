@@ -100,6 +100,8 @@
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="base64Img">Foto</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
           <input nz-input type="file" id="base64Img" (change)="changeListener($event)" />
+          <img class="avatar-uploader" [src]="imageSource" *ngIf="loadingIMG"
+            style="width: 80%;margin:2rem; border:0.1rem solid; border-style: dashed;">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item nz-row class=" register-area">
