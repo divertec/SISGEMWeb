@@ -32,8 +32,9 @@
           <li nz-submenu nzTitle="Maestro"
             *ngIf="currentEmpleado.data.tipoUsuario.tipId==5 || currentEmpleado.data.tipoUsuario.tipId==3 || currentEmpleado.data.tipoUsuario.tipId==2">
             <ul>
-              <li nz-menu-item nzMatchRouter *ngIf="currentEmpleado.data.tipoUsuario.tipId==3"><a
-                  routerLink="/dashboard/empleado">Empleados</a></li>
+              <li nz-menu-item nzMatchRouter
+                *ngIf="currentEmpleado.data.tipoUsuario.tipId==3 || currentEmpleado.data.tipoUsuario.tipId==2 ||  currentEmpleado.data.tipoUsuario.tipId==5">
+                <a routerLink="/dashboard/empleado">Empleados</a></li>
               <li *ngIf="currentEmpleado.data.tipoUsuario.tipId==2" nz-menu-item nzMatchRouter><a
                   routerLink="/dashboard/censo">Censo</a></li>
               <li nz-menu-item nzMatchRouter *ngIf="currentEmpleado.data.tipoUsuario.tipId==5"><a

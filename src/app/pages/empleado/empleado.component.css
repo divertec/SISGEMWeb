@@ -32,3 +32,9 @@
 .register-are {
   margin-bottom: 8px;
 }
+
+.btnGreen {
+  background-color: #199d46;
+  border-color: #199d46;
+  font-weight: bold;
+}

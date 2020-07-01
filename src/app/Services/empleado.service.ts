@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Empleados } from '../Domain/Empleados';
 import { TipoUsuario } from '../Domain/TipoUsuario';
@@ -11,7 +11,10 @@ export class EmpleadoService {
 
   constructor(private http: HttpClient) { }
 
-  getAllEmpleados() {
+  getAllEmpleados(tipoEmpleado: number, idcenso: number) {
+    return this.http.get(`${environment.apiUrl}/empleado/disponibles?idTipo=${tipoEmpleado}&idCenso=` + idcenso);
+  }
+  getAllEmpleados2() {
     return this.http.get(`${environment.apiUrl}/empleado`);
   }
 
@@ -35,5 +38,9 @@ export class EmpleadoService {
     return this.http.delete(`${environment.apiUrl}/empleado/${dni}`);
   }
 
+  asssignarCensoZona(censozona: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+    return this.http.post(`${environment.apiUrl}/persCensoZona/`, censozona, { headers: headers });
+  }
 
 } 

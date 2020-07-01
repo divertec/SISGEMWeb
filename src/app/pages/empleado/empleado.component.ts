@@ -6,6 +6,8 @@ import { TipoUsuario } from 'src/app/Domain/TipoUsuario';
 import { CensoService } from 'src/app/Services/censo.service';
 import { ZonaService } from 'src/app/Services/zona.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
+import { Empleado } from 'src/app/Domain/Empleado';
 
 @Component({
   selector: 'app-empleado',
@@ -36,11 +38,20 @@ export class EmpleadoComponent implements OnInit {
   //SIRVE PARA LIMPIAR LA ETIQUETA
   @ViewChild('fileInput') fileInput: ElementRef;
 
+  //VERIFICAR EL USUASRIO LE CORRESPONDE TENER EL ACCESO A CREAR NUEVOS USUARIOS
+  newEmpleado: boolean = false;
+  tipEmpleado: number = 0;
 
-  constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder, private censoService: CensoService, private zonaService: ZonaService, private sanitizer: DomSanitizer) {
+
+  constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder, private censoService: CensoService, private zonaService: ZonaService, private sanitizer: DomSanitizer, private authEmpleado: AuthenticationService) {
+    this.tipEmpleado = this.authEmpleado.currentEmpleadoValue.data.tipoUsuario.tipId;
   }
 
   ngOnInit() {
+
+    // VALIDACIÓN DE USUASRIO, SI PUEDE EDITAR
+    this.newEmpleado = this.authEmpleado.currentEmpleadoValue.data.tipoUsuario.tipId == 5 ? true : false;
+
     this.fetchAllEmpleados();
     this.fetchAllTipo();
     this.fetchAllCenso();
@@ -105,12 +116,33 @@ export class EmpleadoComponent implements OnInit {
   asignarEmpleado(dni: string) {
     this.registerAsignacion.get('empleado')!.setValue({ dniEmpleado: dni });
     this.isVisibleAsignar = true;
+    this.fetchAllEmpleados();
     console.log(dni);
 
   }
+  asignarEmpleadoDirecto(dni: string) {
+
+    let censo = this.authEmpleado.currentEmpleadoValue.data.censoZona.censo.idCenso;
+    let zona = this.authEmpleado.currentEmpleadoValue.data.censoZona.zona.idZona;
+    const censoZona = JSON.stringify({ zona: { idZona: zona }, censo: { idCenso: censo }, empleado: { dniEmpleado: dni } })
+    this.empleadoService.asssignarCensoZona(censoZona).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllEmpleados(), err => console.log(err)), this.isVisible = false });
+    this.fetchAllEmpleados()
+    console.log(dni)
+  }
 
   fetchAllEmpleados() {
-    this.empleadoService.getAllEmpleados().subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => (console.log(error)));
+    console.log("antes")
+    let censo = this.authEmpleado.currentEmpleadoValue.data.censoZona != null ? parseInt(this.authEmpleado.currentEmpleadoValue.data.censoZona.censo.idCenso) : 0;
+
+    console.log("despues")
+    if (this.authEmpleado.currentEmpleadoValue.data.tipoUsuario.tipId == 2) {
+      this.empleadoService.getAllEmpleados(3, censo).subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => { (console.log(error)), this.loading = false });
+    } else if (this.authEmpleado.currentEmpleadoValue.data.tipoUsuario.tipId == 3) {
+      this.empleadoService.getAllEmpleados(4, censo).subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => { (console.log(error)), this.loading = false });
+    } else if (this.authEmpleado.currentEmpleadoValue.data.tipoUsuario.tipId == 5) {
+      this.empleadoService.getAllEmpleados2().subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => { (console.log(error)), this.loading = false });
+    }
+
   }
   fetchAllTipo() {
     this.empleadoService.getAllTipo().subscribe((resp: any) => this.listOfTipo = resp.data, err => console.log(err))

@@ -1,7 +1,8 @@
 <app-title-header [title]="'LISTA DE EMPLEADOS'"></app-title-header>
 
-<div style="padding: 2rem 0 2rem 0;">
-  <button nz-button [nzType]="'primary'" (click)="showModal()"><span>Nuevo Empleado</span></button>
+<div style="padding: 2rem 0 2rem 0; text-align: right;">
+  <button *ngIf="newEmpleado ==true" nz-button [nzType]="'primary'" class="btnGreen" (click)="showModal()"><span>Nuevo
+      Empleado</span></button>
 </div>
 
 <nz-table #nzTable [nzData]="listOfDisplayData" nzTableLayout="fixed" [nzLoading]="loading">
@@ -24,7 +25,8 @@
       <td>{{data.tipoUsuario.tipo}}</td>
       <td>{{data.estado == 1?"Activo":"Inactivo"}}</td>
       <td>
-        <button nz-button nzType="default" (click)="asignarEmpleado(data.dniEmpleado)">Asignar</button>
+        <button nz-button nzType="default"
+          (click)=" tipEmpleado== 3 ? asignarEmpleadoDirecto(data.dniEmpleado) :   asignarEmpleado(data.dniEmpleado)">Asignar</button>
         <nz-divider nzType="vertical"></nz-divider>
         <button nz-button nzType="primary" nzDanger (click)="deleteEmpleado(data.dniEmpleado)">Eliminar</button>
       </td>
