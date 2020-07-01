@@ -7,6 +7,7 @@ import { EmpleadoComponent } from './pages/empleado/empleado.component';
 import { ZonaComponent } from './pages/zona/zona.component';
 import { CensoComponent } from './pages/censo/censo.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 /* const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/welcome' },
@@ -15,7 +16,7 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/dashboard' },
+  { path: '', pathMatch: 'full', redirectTo: '/dashboard/principal' },
   {
     path: 'dashboard', component: WelcomeComponent, canActivate: [AuthGuard],
 
@@ -30,6 +31,8 @@ const routes: Routes = [
         path: 'censo', component: CensoComponent
       }, {
         path: 'perfil', component: PerfilComponent
+      }, {
+        path: 'principal', component: DashboardComponent
       }
     ]
 

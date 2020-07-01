@@ -40,9 +40,18 @@
       <td>{{data.creoCenso.nombres}}</td>
       <td>{{data.estado == 1?"Pendiente": data.estado ==2? "Activo" : "Terminado"}}</td>
       <td>
-        <button nz-button nzType="default" (click)="editCenso(data.idCenso)">Editar</button>
-        <nz-divider nzType="vertical"></nz-divider>
-        <button nz-button nzType="primary" nzDanger (click)="deleteCenso(data.idCenso)">Eliminar</button>
+        <div>
+          <nz-switch [ngModel]="data.estado == 3 ? true:false"
+            (ngModelChange)="editEstado($event,data.estado ,data.idCenso)"
+            [nzDisabled]="data.estado == 3 ? true : false"
+            [nzCheckedChildren]="data.estado == 1 ? 'Activo': data.estado ==2 ? 'Terminado' : 'Terminado'"
+            [nzUnCheckedChildren]="data.estado == 1 ? 'Pendiente': data.estado ==2 ? 'Activo' : 'Terminado'">
+          </nz-switch>
+          <!--<nz-divider nzType="vertical"></nz-divider>-->
+          <!--<button nz-button nzType="default" (click)="editCenso(data.idCenso)">Editar</button>-->
+          <nz-divider nzType="vertical"></nz-divider>
+          <button nz-button nzType="primary" nzDanger (click)="deleteCenso(data.idCenso)">Deshabilitar</button>
+        </div>
       </td>
     </tr>
   </tbody>

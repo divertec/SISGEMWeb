@@ -20,6 +20,7 @@ import { TitleHeaderComponent } from './components/title-header/title-header.com
 import { CensoComponent } from './pages/censo/censo.component';
 import { ZonaComponent } from './pages/zona/zona.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 registerLocaleData(es);
 
@@ -31,7 +32,8 @@ registerLocaleData(es);
     TitleHeaderComponent,
     CensoComponent,
     ZonaComponent,
-    PerfilComponent
+    PerfilComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

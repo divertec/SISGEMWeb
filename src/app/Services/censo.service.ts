@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,7 +16,10 @@ export class CensoService {
   insertCenso(censo: string) {
     return this.http.post(`${environment.apiUrl}/censo/`, censo);
   }
-
+  updateEstado(censo: string) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+    return this.http.put(`${environment.apiUrl}/censo/estado`, censo, { headers: headers });
+  }
   updateCenso(censo: string, idcenso: number) {
     return this.http.put(`${environment.apiUrl}/censo/${idcenso}`, censo);
   }

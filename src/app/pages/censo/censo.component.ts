@@ -4,6 +4,7 @@ import { Censo } from 'src/app/Domain/Censo';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { DatePipe } from '@angular/common';
+import { isInteger } from 'ng-zorro-antd/core/util';
 
 let almacenValor: boolean = false;
 
@@ -48,19 +49,28 @@ export class CensoComponent implements OnInit {
     })
   }
 
-  ngOnChanges(changes: SimpleChange): void {
-    console.log("cambio");
-
-  }
-
   editCenso(idCenso: number) {
 
   }
 
+  editEstado($event, tipo: string, idcenso: number) {
+    let estadoTipo = 0;
+    if ($event == true) {
+      //el tipo sube 1 estado
+      estadoTipo = parseInt(tipo) + 1;
+    } else {
+      estadoTipo = parseInt(tipo);
+    }
+    const censo = JSON.stringify({ idCenso: idcenso, estado: String(estadoTipo) })
+    this.censo.updateEstado(censo).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllCenso(), err => console.log(err)), this.isVisible = false, this.visibleTable = true });
+  }
   deleteCenso(idCenso: number) {
     this.fetchDeleteCenso(idCenso);
   }
 
+  fetchEditCenso(idCenso: number) {
+    //this.censo.updateCenso(idCenso).subscribe((resp) => { console.log(resp));
+  }
 
   fetchDeleteCenso(idZona: number) {
     this.censo.deleteCenso(idZona).subscribe((resp: any) => { this.fetchAllCenso(), console.log(resp), error => (console.log(error)) });
@@ -72,8 +82,6 @@ export class CensoComponent implements OnInit {
         if (x.estado == 1 || x.estado == 2) {
           //validar si existe censos pendientes
           this.censoPendiente = true;
-        } else {
-          this.censoPendiente = false;
         }
       }); resp.data, this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false
     }, error => {
@@ -93,6 +101,9 @@ export class CensoComponent implements OnInit {
     console.log(JSON.stringify(censo));
     this.censo.insertCenso(censo).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllCenso(), err => console.log(err)), this.isVisible = false, this.visibleTable = true });
     this.registerForm.reset();
+  }
+  onSubmitEdit() {
+
   }
 
   //DATATABLES
