@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms';
 
   ],
   declarations: [WelcomeComponent, TitleHeaderComponent],
-  bootstrap: [EmpleadoComponent],
+  bootstrap: [],
   exports: [WelcomeComponent],
 
 

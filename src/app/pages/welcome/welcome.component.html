@@ -1,5 +1,4 @@
 <nz-layout class="app-layout">
-  <!-- *ngIf="currentUser" -->
   <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null">
     <div class="sidebar-logo">
@@ -33,9 +32,12 @@
           <li nz-submenu nzTitle="Maestro"
             *ngIf="currentEmpleado.data.tipoUsuario.tipId==5 || currentEmpleado.data.tipoUsuario.tipId==3 || currentEmpleado.data.tipoUsuario.tipId==2">
             <ul>
-              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/empleado">Empleados</a></li>
-              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/censo">Censo</a></li>
-              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/zona">Zona</a></li>
+              <li nz-menu-item nzMatchRouter *ngIf="currentEmpleado.data.tipoUsuario.tipId==3"><a
+                  routerLink="/dashboard/empleado">Empleados</a></li>
+              <li *ngIf="currentEmpleado.data.tipoUsuario.tipId==2" nz-menu-item nzMatchRouter><a
+                  routerLink="/dashboard/censo">Censo</a></li>
+              <li nz-menu-item nzMatchRouter *ngIf="currentEmpleado.data.tipoUsuario.tipId==5"><a
+                  routerLink="/dashboard/zona">Zona</a></li>
             </ul>
           </li>
           <li nz-submenu nzTitle="Proceso" *ngIf="currentEmpleado.data.tipoUsuario.tipId==4">

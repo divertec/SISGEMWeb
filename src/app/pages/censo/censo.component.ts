@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChange } from '@angular/core';
 import { CensoService } from 'src/app/Services/censo.service';
 import { Censo } from 'src/app/Domain/Censo';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { stringify } from 'querystring';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { DatePipe } from '@angular/common';
+
+let almacenValor: boolean = false;
 
 @Component({
   selector: 'app-censo',
@@ -14,6 +15,7 @@ import { DatePipe } from '@angular/common';
 })
 export class CensoComponent implements OnInit {
   ///DATATABLE
+  visibleTable = true;
   searchValue = '';
   visible = false;
   loading = true;
@@ -24,6 +26,13 @@ export class CensoComponent implements OnInit {
   submitted = false;
   registerForm: FormGroup;
   dateFormat: string
+  //VERIFICAR SI EXISTE UN CENSO PENDIENTE
+  censoPendiente: boolean = false;
+  //ALERTA 
+  isVisibleAlert: boolean = false;
+
+
+
   constructor(private censo: CensoService, private formBuilder: FormBuilder, private authEmpleado: AuthenticationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -39,8 +48,12 @@ export class CensoComponent implements OnInit {
     })
   }
 
-  editCenso(idCenso: number) {
+  ngOnChanges(changes: SimpleChange): void {
+    console.log("cambio");
 
+  }
+
+  editCenso(idCenso: number) {
 
   }
 
@@ -54,7 +67,21 @@ export class CensoComponent implements OnInit {
   }
   //FETCHS....
   fetchAllCenso() {
-    this.censo.getAllCenso().subscribe((resp: any) => { this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false }, error => (console.log(error)));
+    this.censo.getAllCenso().subscribe((resp: any) => {
+      resp.data.forEach((x) => {
+        if (x.estado == 1 || x.estado == 2) {
+          //validar si existe censos pendientes
+          this.censoPendiente = true;
+        } else {
+          this.censoPendiente = false;
+        }
+      }); resp.data, this.listOfData = resp.data, this.listOfDisplayData = [...this.listOfData], this.loading = false
+    }, error => {
+      if (error == "OK") {
+        this.visibleTable = false;
+        this.censoPendiente = false;
+      }
+    });
   }
 
 
@@ -64,7 +91,8 @@ export class CensoComponent implements OnInit {
     censo.fechaFin = this.datePipe.transform(censo.fechaFin, 'dd-MM-yyyy');
     censo.fechaIni = this.datePipe.transform(censo.fechaIni, 'dd-MM-yyyy');
     console.log(JSON.stringify(censo));
-    this.censo.insertCenso(censo).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllCenso(), err => console.log(err)), this.isVisible = false });
+    this.censo.insertCenso(censo).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllCenso(), err => console.log(err)), this.isVisible = false, this.visibleTable = true });
+    this.registerForm.reset();
   }
 
   //DATATABLES
@@ -80,7 +108,13 @@ export class CensoComponent implements OnInit {
 
   //MODAL
   showModal(): void {
-    this.isVisible = true;
+    if (this.censoPendiente == true) {
+      this.isVisibleAlert = true;
+      console.log("entro a alerta true")
+    } else {
+      this.isVisible = true;
+      console.log("entro a isvisible map")
+    }
   }
 
   handleOk(): void {

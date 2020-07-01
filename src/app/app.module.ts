@@ -47,6 +47,6 @@ registerLocaleData(es);
   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent, EmpleadoComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

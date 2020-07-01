@@ -1,0 +1,17 @@
+[nz-button] {
+  margin-right: 8px;
+  margin-bottom: 12px;
+  ;
+}
+
+.btnGreen {
+  background-color: #199d46;
+  border-color: #199d46;
+  font-weight: bold;
+}
+
+.msgError {
+  font-weight: bold;
+  font-size: xx-large;
+  margin-top: 1rem;
+}
