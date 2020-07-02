@@ -2,7 +2,7 @@
   <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
     [nzTrigger]="null">
     <div class="sidebar-logo">
-      <a href="#" target="_blank">
+      <a href="/dashboard/principal" target="_blank">
         <img src="../../../assets/imagenes/logo.png" alt="logo">
         <h1>SISGEM v1.0</h1>
       </a>
@@ -39,22 +39,15 @@
                   routerLink="/dashboard/censo">Censo</a></li>
               <li nz-menu-item nzMatchRouter *ngIf="currentEmpleado.data.tipoUsuario.tipId==5"><a
                   routerLink="/dashboard/zona">Zona</a></li>
+              <li nz-menu-item nzMatchRouter
+                *ngIf="currentEmpleado.data.tipoUsuario.tipId==5 || currentEmpleado.data.tipoUsuario.tipId==2 || currentEmpleado.data.tipoUsuario.tipId==3">
+                <a routerLink="/dashboard/infozona">Información Zona</a></li>
             </ul>
           </li>
           <li nz-submenu nzTitle="Proceso" *ngIf="currentEmpleado.data.tipoUsuario.tipId==4">
             <ul>
-              <li nz-menu-item nzMatchRouter><a routerLink="/dashboard/">Registro Censo</a></li>
+              <li nz-menu-item nzMatchRouter><a routerLink="#"></a></li>
             </ul>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
           </li>
         </ul>
       </li>

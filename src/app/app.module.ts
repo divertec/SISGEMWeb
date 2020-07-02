@@ -21,6 +21,7 @@ import { CensoComponent } from './pages/censo/censo.component';
 import { ZonaComponent } from './pages/zona/zona.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { InfozonaComponent } from './pages/infozona/infozona.component';
 
 registerLocaleData(es);
 
@@ -33,7 +34,8 @@ registerLocaleData(es);
     CensoComponent,
     ZonaComponent,
     PerfilComponent,
-    DashboardComponent
+    DashboardComponent,
+    InfozonaComponent
   ],
   imports: [
     BrowserModule,

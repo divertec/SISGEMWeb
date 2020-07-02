@@ -8,6 +8,7 @@ import { ZonaComponent } from './pages/zona/zona.component';
 import { CensoComponent } from './pages/censo/censo.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { InfozonaComponent } from './pages/infozona/infozona.component';
 
 /* const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/welcome' },
@@ -33,6 +34,8 @@ const routes: Routes = [
         path: 'perfil', component: PerfilComponent
       }, {
         path: 'principal', component: DashboardComponent
+      }, {
+        path: 'infozona', component: InfozonaComponent
       }
     ]
 
