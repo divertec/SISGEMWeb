@@ -23,6 +23,8 @@ export class ZonaComponent implements OnInit {
 
   //modal edit
   isVisibleEdit = false;
+  ///guardar id
+  idEdit: number = 0;
   constructor(private zona: ZonaService, private formBuilder: FormBuilder, private formEdit: FormBuilder) { }
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class ZonaComponent implements OnInit {
 
   editZona(idZona: number) {
     console.log(idZona);
+    this.idEdit = idZona;
     this.zona.findZona(idZona).subscribe((resp: any) => {
       console.log(resp.data);
       this.editForm.setValue({
@@ -53,7 +56,7 @@ export class ZonaComponent implements OnInit {
       //this.editForm.controls['zonas'].setValue(resp.data.zonas);
       //this.editForm.get('zonas').setValue({ zonas: resp.data.zonas })
     })
-    this.isVisibleEdit = true;
+    this.showModalEdit();
 
   }
   deleteZona(idZona: number) {
@@ -73,17 +76,23 @@ export class ZonaComponent implements OnInit {
     const zona = this.registerForm.value;
     console.log(JSON.stringify(zona));
     this.zona.insertZona(zona).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllZonas(), err => console.log(err)), this.isVisible = false });
+    this.registerForm.reset()
   }
 
   //Método
   onSubmitEdit() {
-    //const zona = this.registerForm.value;
-    const zona = JSON.stringify({ zona: 1 });
-    this.zona.updateZona(zona, 1).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllZonas(), err => console.log(err)), this.isVisible = false });
+    const zonaEdit = this.editForm.value;
+    let id;
+    if (this.idEdit != 0) {
+      id = this.idEdit;
+    }
+    this.zona.updateZona(zonaEdit, id).subscribe(resp => {
+      console.log(JSON.stringify(resp),
+        this.fetchAllZonas(), err => console.log(err)),
+        this.isVisibleEdit = false
+    });
+    this.editForm.reset
   }
-
-
-
   //DATATABLES
   reset(): void {
     this.searchValue = '';
@@ -94,7 +103,6 @@ export class ZonaComponent implements OnInit {
     this.visible = false;
     this.listOfDisplayData = this.listOfData.filter((item: Zona) => item.zonas.indexOf(this.searchValue) !== -1);
   }
-
 
   //MODAL
   showModal(): void {
@@ -109,6 +117,7 @@ export class ZonaComponent implements OnInit {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+    this.registerForm.reset();
   }
 
   //MODAL EDIT
@@ -124,6 +133,7 @@ export class ZonaComponent implements OnInit {
   handleCancelEdit(): void {
     console.log('Button cancel clicked!');
     this.isVisibleEdit = false;
+    this.editForm.reset();
   }
 
 

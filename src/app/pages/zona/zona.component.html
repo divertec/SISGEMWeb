@@ -85,38 +85,32 @@
 
 <!--  Modal editar -->
 <nz-modal [(nzVisible)]="isVisibleEdit" nzTitle="Editar Zona" nzWidth="600px" nzAutofocus="'ok'"
-  (nzOnCancel)="handleCancelEdit()" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
-  (nzOnOk)="handleOkEdit()">
-  <ng-template #modalTitle>
+  (nzOnCancel)="handleCancelEdit()" [nzTitle]="modalTitleEdit" [nzContent]="modalContentEdit"
+  [nzFooter]="modalFooterEdit" (nzOnOk)="handleOkEdit()">
+  <ng-template #modalTitleEdit>
     EDITAR DE ZONA
   </ng-template>
-  <ng-template #modalContent>
-    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmitEdit()" [nzLayout]="'horizontal'">
+  <ng-template #modalContentEdit>
+    <form nz-form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()" [nzLayout]="'horizontal'">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="zonas" nzRequired>Nombre</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
           <input nz-input id="zonas" formControlName="zonas">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="descripcion" nzRequired>Descripción</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
           <input nz-input id="descripcion" formControlName="descripcion" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cantidadEmpleados">Cantidad Empleados</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback>
           <input type="number" formControlName="cantidadEmpleados" id="cantidadEmpleados" nz-input />
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sexo">Estado</nz-form-label>
-        <nz-select formControlName="sexo" class="phone-select">
-          <nz-option nzLabel="Activo" nzValue="1"></nz-option>
-          <nz-option nzLabel="Inactivo" nzValue="2"></nz-option>
-        </nz-select>
-      </nz-form-item>
+
       <nz-form-item nz-row class=" register-area">
         <nz-form-control [nzSpan]="14" [nzOffset]="6">
           <button nz-button nzType="primary">Registrar</button>
@@ -124,6 +118,6 @@
       </nz-form-item>
     </form>
   </ng-template>
-  <ng-template #modalFooter>
+  <ng-template #modalFooterEdit>
   </ng-template>
 </nz-modal>

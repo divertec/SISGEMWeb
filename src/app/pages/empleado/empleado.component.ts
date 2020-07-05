@@ -194,8 +194,6 @@ export class EmpleadoComponent implements OnInit {
     this.isVisible = true;
   }
 
-
-
   handleOk(): void {
     console.log('Button ok clicked!');
     this.isVisible = false;
@@ -204,6 +202,7 @@ export class EmpleadoComponent implements OnInit {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+    this.registerForm.reset()
   }
 
   handleOkAsignar(): void {
@@ -214,6 +213,7 @@ export class EmpleadoComponent implements OnInit {
   handleCancelAsignar(): void {
     console.log('Button cancel clicked!');
     this.isVisibleAsignar = false;
+    this.registerAsignacion.reset();
   }
 
 }
