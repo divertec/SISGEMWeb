@@ -19,8 +19,11 @@ export class ZonaComponent implements OnInit {
   isVisible = false;
   submitted = false;
   registerForm: FormGroup;
+  editForm: FormGroup;
 
-  constructor(private zona: ZonaService, private formBuilder: FormBuilder) { }
+  //modal edit
+  isVisibleEdit = false;
+  constructor(private zona: ZonaService, private formBuilder: FormBuilder, private formEdit: FormBuilder) { }
 
   ngOnInit(): void {
     this.fetchAllZonas();
@@ -29,9 +32,29 @@ export class ZonaComponent implements OnInit {
       descripcion: '',
       cantidadEmpleados: ''
     });
+
+    this.editForm = this.formEdit.group({
+      zonas: '',
+      descripcion: '',
+      cantidadEmpleados: ''
+    })
+
   }
 
   editZona(idZona: number) {
+    console.log(idZona);
+    this.zona.findZona(idZona).subscribe((resp: any) => {
+      console.log(resp.data);
+      this.editForm.setValue({
+        zonas: resp.data.zonas,
+        descripcion: resp.data.descripcion,
+        cantidadEmpleados: resp.data.cantidadEmpleados
+      })
+      //this.editForm.controls['zonas'].setValue(resp.data.zonas);
+      //this.editForm.get('zonas').setValue({ zonas: resp.data.zonas })
+    })
+    this.isVisibleEdit = true;
+
   }
   deleteZona(idZona: number) {
     this.fetchDeletezona(idZona)
@@ -50,6 +73,13 @@ export class ZonaComponent implements OnInit {
     const zona = this.registerForm.value;
     console.log(JSON.stringify(zona));
     this.zona.insertZona(zona).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllZonas(), err => console.log(err)), this.isVisible = false });
+  }
+
+  //Método
+  onSubmitEdit() {
+    //const zona = this.registerForm.value;
+    const zona = JSON.stringify({ zona: 1 });
+    this.zona.updateZona(zona, 1).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllZonas(), err => console.log(err)), this.isVisible = false });
   }
 
 
@@ -81,7 +111,20 @@ export class ZonaComponent implements OnInit {
     this.isVisible = false;
   }
 
+  //MODAL EDIT
+  showModalEdit(): void {
+    this.isVisibleEdit = true;
+  }
 
+  handleOkEdit(): void {
+    console.log('Button ok clicked!');
+    this.isVisibleEdit = false;
+  }
+
+  handleCancelEdit(): void {
+    console.log('Button cancel clicked!');
+    this.isVisibleEdit = false;
+  }
 
 
 }

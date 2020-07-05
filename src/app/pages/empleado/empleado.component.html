@@ -44,7 +44,7 @@
     </div>
   </div>
 </nz-dropdown-menu>
-
+<!-- MODAL  PARA CREAR UN NUEVO EMPLEADO-->
 <nz-modal [(nzVisible)]="isVisible" nzTitle="NUEVO EMPLEADO" nzWidth="600px" nzAutofocus="'ok'"
   (nzOnCancel)="handleCancel()" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
   (nzOnOk)="handleOk()">
@@ -55,26 +55,43 @@
     <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()" [nzLayout]="'horizontal'">
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dni" nzRequired>DNI EMPLEADO</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input id="dni" formControlName="dniEmpleado">
+        <nz-form-control [nzSm]="14" [nzXs]="24" name="maxlength" [nzErrorTip]="combineTpl" nzHasFeedback>
+          <input nz-input id="dni" formControlName="dniEmpleado" minlength="8" maxlength="8" pattern="^[0-9]+" required>
+          <ng-template #combineTpl let-control>
+            <ng-container *ngIf="control.hasError('minlength')">8 caracteres minimos</ng-container>
+            <ng-container *ngIf="control.hasError('required')">El Campo es requerido</ng-container>
+            <ng-container *ngIf="control.hasError('pattern')"> Solo números porfavor</ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
+      <!-- <p class="errorInput" *ngIf="dniEmpleado.errors.required">
+        El dni es requerido
+      </p>
+      <p class="errorInput" *ngIf="dniEmpleado.errors.maxLength">
+        La cantidad maxima es 8
+      </p> -->
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nombres" nzRequired>Nombres</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input nz-input id="nombres" formControlName="nombres" />
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback [nzErrorTip]="errorNombre">
+          <input nz-input id="nombres" formControlName="nombres" required />
+          <ng-template #errorNombre let-control>
+            <ng-container *ngIf="control.hasError('required')">El campo es requerido</ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="celular">Celular</nz-form-label>
         <nz-form-control [nzSm]="14" [nzXs]="24">
-          <input type="number" formControlName="celular" id="celular" nz-input />
+          <input formControlName="celular" id="celular" nz-input maxlength="9" />
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="correo">Correo</nz-form-label>
-        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Ingrese su Correo">
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback [nzErrorTip]="errorEmail">
           <input nz-input formControlName="correo" id="correo" />
+          <ng-template #errorEmail let-control>
+            <ng-container *ngIf="correo.errors.pattern">Ejemplo correo@correo.com</ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -86,7 +103,7 @@
       </nz-form-item>
       <nz-form-item formGroupName="tipoUsuario">
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tipId" nzRequired>Tipo Usuario</nz-form-label>
-        <nz-select formControlName="tipId" style="width: 12rem;">
+        <nz-select formControlName="tipId" style="width: 12rem;" required>
           <nz-option *ngFor="let tipo of listOfTipo" [nzLabel]="tipo.tipo" [nzValue]="tipo.tipId"></nz-option>
           <!--<nz-option nzLabel="Femenino" nzValue="F"></nz-option>
           <nz-option nzLabel="Masculino" nzValue="M"></nz-option>-->

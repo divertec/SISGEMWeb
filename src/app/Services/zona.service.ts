@@ -19,8 +19,11 @@ export class ZonaService {
   updateZona(zona: string, idZona: number) {
     return this.http.put(`${environment.apiUrl}/zona/${idZona}`, zona);
   }
-  deleteZona(dni: number) {
-    return this.http.delete(`${environment.apiUrl}/zona/${dni}`);
+  deleteZona(idZona: number) {
+    return this.http.delete(`${environment.apiUrl}/zona/${idZona}`);
+  }
+  findZona(idZona: number) {
+    return this.http.get(`${environment.apiUrl}/zona/${idZona}`);
   }
 
 }

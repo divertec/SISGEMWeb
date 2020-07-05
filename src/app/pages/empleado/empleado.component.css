@@ -26,7 +26,7 @@
 }
 
 .phone-select {
-  width: 120px;
+  width: 160px;
 }
 
 .register-are {
@@ -37,4 +37,8 @@
   background-color: #199d46;
   border-color: #199d46;
   font-weight: bold;
+}
+
+.errorClass {
+  color: red;
 }

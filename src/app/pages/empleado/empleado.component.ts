@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { EmpleadoService } from "../../Services/empleado.service";
 import { Empleados } from 'src/app/Domain/Empleados';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { TipoUsuario } from 'src/app/Domain/TipoUsuario';
 import { CensoService } from 'src/app/Services/censo.service';
 import { ZonaService } from 'src/app/Services/zona.service';
@@ -41,6 +41,8 @@ export class EmpleadoComponent implements OnInit {
   //VERIFICAR EL USUASRIO LE CORRESPONDE TENER EL ACCESO A CREAR NUEVOS USUARIOS
   newEmpleado: boolean = false;
   tipEmpleado: number = 0;
+  //patern
+  private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
   constructor(private empleadoService: EmpleadoService, private formBuilder: FormBuilder, private censoService: CensoService, private zonaService: ZonaService, private sanitizer: DomSanitizer, private authEmpleado: AuthenticationService) {
@@ -58,18 +60,17 @@ export class EmpleadoComponent implements OnInit {
     this.fetchAllZona();
 
     this.registerForm = this.formBuilder.group({
-      dniEmpleado: null,
+      dniEmpleado: new FormControl('', [Validators.required, Validators.maxLength(8)]),
       contrasenia: 'password',
-      nombres: '',
-      celular: '',
-      correo: '',
-      sexo: '',
+      nombres: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      celular: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      correo: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(this.emailPattern)]),
+      sexo: new FormControl('', [Validators.required]),
       tipoUsuario: this.formBuilder.group({
-        tipId: ''
+        tipId: new FormControl('', [Validators.required]),
       }),
-      direccionDomicilio: '',
+      direccionDomicilio: new FormControl('', [Validators.required, Validators.minLength(5)]),
       base64Img: null
-
     });
 
     this.registerAsignacion = this.formBuilder.group({
@@ -85,6 +86,15 @@ export class EmpleadoComponent implements OnInit {
 
     });
   }
+
+  //GETTERS 
+  get dniEmpleado() { return this.registerForm.get('dniEmpleado'); }
+  get nombres() { return this.registerForm.get('nombres') };
+  get celular() { return this.registerForm.get('dniEmpleado') };
+  get correo() { return this.registerForm.get('correo') };
+  get sexo() { return this.registerForm.get('sexo') };
+  get tipId() { return this.registerForm.get('tipId') };
+  get direccionDomicilio() { return this.registerForm.get('direccionDomicilio') };
 
   //CUANDO SE INGRESA UNA IMAGEN
   changeListener($event): void {
@@ -161,12 +171,13 @@ export class EmpleadoComponent implements OnInit {
   onSubmit() {
     const user = this.registerForm.value;
     this.empleadoService.insertEmpleado(user).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllEmpleados(), err => console.log(err)), this.isVisible = false });
+    this.registerForm.reset();
   }
   onSubmitAsignar() {
     const asignacion = this.registerAsignacion.value;
     console.log(asignacion)
     this.empleadoService.insertCensoZona(asignacion).subscribe(resp => { console.log(JSON.stringify(resp), this.fetchAllEmpleados(), err => console.log(err)), this.isVisibleAsignar = false; })
-
+    this.registerAsignacion.reset();
   }
   //DATATABLES
   reset(): void {
