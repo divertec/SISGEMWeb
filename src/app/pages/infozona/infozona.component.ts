@@ -49,7 +49,7 @@ export class InfozonaComponent implements OnInit {
 
   search(): void {
     this.visible = false;
-    this.listOfDisplayData = this.listOfData.filter((item: any) => item.zonas.indexOf(this.searchValue) !== -1);
+    this.listOfDisplayData = this.listOfData.filter((item: any) => item.nombres.indexOf(this.searchValue) !== -1);
   }
 
 
